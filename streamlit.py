@@ -18,6 +18,7 @@ if uploaded_file is not None:
     else:
         st.error("The uploaded file does not contain a 'label' column")
 
+
   import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
