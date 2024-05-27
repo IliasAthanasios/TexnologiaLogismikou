@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, silhouette_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.cluster import KMeans
 
-# Συνάρτηση για την οπτικοποίηση μείωσης διάστασης
+
 def visualize_2d(data, method):
     features = data.iloc[:, :-1]
     labels = data.iloc[:, -1]
@@ -23,7 +23,7 @@ def visualize_2d(data, method):
     if method == 'PCA':
         reducer = PCA(n_components=2)
     elif method == 't-SNE':
-        # Ορισμός perplexity, πρέπει να είναι < αριθμού δειγμάτων
+        
         perplexity = min(30, len(data) - 1)
         reducer = TSNE(n_components=2, perplexity=perplexity)
     
@@ -47,7 +47,7 @@ def visualize_2d(data, method):
     except ValueError as e:
         st.error(f"Error during {method} visualization: {e}")
 
-# Συνάρτηση για Exploratory Data Analysis
+
 def eda(data):
     st.write("Summary Statistics")
     st.write(data.describe())
@@ -55,7 +55,7 @@ def eda(data):
     st.write("Class Distribution")
     st.bar_chart(data.iloc[:, -1].value_counts())
 
-# Συνάρτηση για αλγόριθμο κατηγοριοποίησης
+
 def classification_tab(data):
     features = data.iloc[:, :-1]
     labels = data.iloc[:, -1]
@@ -79,9 +79,9 @@ def classification_tab(data):
     except ValueError as e:
         st.error(f"Error during k-NN classification: {e}")
     
-    # Προσθήκη άλλων αλγορίθμων κατηγοριοποίησης εδώ
+    
 
-# Συνάρτηση για αλγόριθμο ομαδοποίησης
+
 def clustering_tab(data):
     features = data.iloc[:, :-1]
     
@@ -98,12 +98,12 @@ def clustering_tab(data):
     except ValueError as e:
         st.error(f"Error during k-Means clustering: {e}")
     
-    # Προσθήκη άλλων αλγορίθμων ομαδοποίησης εδώ
+    
 
 def main():
     st.title("Data Analysis and Machine Learning App")
 
-    # Φόρτωση δεδομένων
+    
     uploaded_file = st.file_uploader("Choose a CSV or Excel file", type=["csv", "xlsx"])
     if uploaded_file is not None:
         if uploaded_file.name.endswith('.csv'):
@@ -114,15 +114,15 @@ def main():
         st.write("Data Preview")
         st.write(data.head())
         
-        # Εμφάνιση στατιστικών και διαγραμμάτων EDA
+        
         eda(data)
 
-        # Tabs για PCA και t-SNE
+        
         st.header("2D Visualization")
         method = st.selectbox("Choose a dimensionality reduction method", ['PCA', 't-SNE'])
         visualize_2d(data, method)
 
-        # Tabs για αλγόριθμους Μηχανικής Μάθησης
+        
         st.header("Machine Learning")
         tab1, tab2 = st.tabs(["Classification", "Clustering"])
         
