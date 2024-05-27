@@ -34,7 +34,12 @@ if uploaded_file is not None:
     st.header("2D Visualization")
     visualization_option = st.selectbox("Select a visualization method", ["PCA", "t-SNE"])
 
-    def pca_visualization(data):
+   import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+def pca_visualization(data):
     pca = PCA(n_components=2)
     principal_components = pca.fit_transform(data.iloc[:, :-1])
 
@@ -60,6 +65,7 @@ if uploaded_file is not None:
 # Προσθήκη του κώδικα φόρτωσης και χρήσης της συνάρτησης
 data = pd.read_csv('sample_data.csv')  # Αντικαταστήστε το με την πραγματική φόρτωση δεδομένων
 pca_visualization(data)
+
 
     def tsne_visualization(data):
         tsne = TSNE(n_components=2)
