@@ -35,11 +35,31 @@ if uploaded_file is not None:
     visualization_option = st.selectbox("Select a visualization method", ["PCA", "t-SNE"])
 
     def pca_visualization(data):
-        pca = PCA(n_components=2)
-        principal_components = pca.fit_transform(data.iloc[:, :-1])
-        plt.scatter(principal_components[:, 0], principal_components[:, 1], c=data.iloc[:, -1])
-        plt.title('PCA Visualization')
-        st.pyplot(plt)
+    pca = PCA(n_components=2)
+    principal_components = pca.fit_transform(data.iloc[:, :-1])
+
+    # Αντιστοίχιση κατηγοριών σε αριθμητικές τιμές για το χρωματισμό
+    labels = data.iloc[:, -1]
+    unique_labels = labels.unique()
+    label_mapping = {label: idx for idx, label in enumerate(unique_labels)}
+    numeric_labels = labels.map(label_mapping)
+
+    plt.figure(figsize=(10, 6))
+    scatter = plt.scatter(principal_components[:, 0], principal_components[:, 1], c=numeric_labels, cmap='viridis')
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.title('PCA Visualization')
+
+    # Προσθήκη του χρωματικού μπαρ για την αντιστοίχιση κατηγοριών
+    cbar = plt.colorbar(scatter)
+    cbar.set_ticks([label_mapping[label] for label in unique_labels])
+    cbar.set_ticklabels(unique_labels)
+
+    st.pyplot(plt)
+
+# Προσθήκη του κώδικα φόρτωσης και χρήσης της συνάρτησης
+data = pd.read_csv('sample_data.csv')  # Αντικαταστήστε το με την πραγματική φόρτωση δεδομένων
+pca_visualization(data)
 
     def tsne_visualization(data):
         tsne = TSNE(n_components=2)
