@@ -58,14 +58,14 @@ if uploaded_file is not None:
     st.pyplot(plt)
 
 # Φόρτωση δεδομένων από το CSV
-data = pd.read_csv('sample_data.csv')  # Αντικαταστήστε το με την πραγματική φόρτωση δεδομένων
-st.write("Data Preview")
-st.write(data.head())
+    data = pd.read_csv('sample_data.csv')  # Αντικαταστήστε το με την πραγματική φόρτωση δεδομένων
+    st.write("Data Preview")
+    st.write(data.head())
 
-st.write("Labels Preview")
-st.write(data.iloc[:, -1].unique())
+    st.write("Labels Preview")
+    st.write(data.iloc[:, -1].unique())
 
-pca_visualization(data)
+    pca_visualization(data)
 
     # Classification Tab
     st.header("Classification")
