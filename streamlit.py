@@ -23,24 +23,29 @@ def visualize_2d(data, method):
     if method == 'PCA':
         reducer = PCA(n_components=2)
     elif method == 't-SNE':
-        reducer = TSNE(n_components=2, perplexity=30)
+        # Ορισμός perplexity, πρέπει να είναι < αριθμού δειγμάτων
+        perplexity = min(30, len(data) - 1)
+        reducer = TSNE(n_components=2, perplexity=perplexity)
     
-    reduced_data = reducer.fit_transform(features)
-    
-    plt.figure(figsize=(10, 6))
-    scatter = plt.scatter(reduced_data[:, 0], reduced_data[:, 1], c=numeric_labels, cmap='viridis')
-    plt.xlabel('Component 1')
-    plt.ylabel('Component 2')
-    plt.title(f'{method} Visualization')
+    try:
+        reduced_data = reducer.fit_transform(features)
+        
+        plt.figure(figsize=(10, 6))
+        scatter = plt.scatter(reduced_data[:, 0], reduced_data[:, 1], c=numeric_labels, cmap='viridis')
+        plt.xlabel('Component 1')
+        plt.ylabel('Component 2')
+        plt.title(f'{method} Visualization')
 
-    if labels.dtype == 'object':
-        cbar = plt.colorbar(scatter)
-        cbar.set_ticks(range(len(le.classes_)))
-        cbar.set_ticklabels(le.classes_)
-    else:
-        plt.colorbar(scatter)
-    
-    st.pyplot(plt)
+        if labels.dtype == 'object':
+            cbar = plt.colorbar(scatter)
+            cbar.set_ticks(range(len(le.classes_)))
+            cbar.set_ticklabels(le.classes_)
+        else:
+            plt.colorbar(scatter)
+        
+        st.pyplot(plt)
+    except ValueError as e:
+        st.error(f"Error during {method} visualization: {e}")
 
 # Συνάρτηση για Exploratory Data Analysis
 def eda(data):
