@@ -70,10 +70,14 @@ def classification_tab(data):
     
     k = st.slider('Select k for k-NN', 1, 20, 5)
     knn = KNeighborsClassifier(n_neighbors=k)
-    knn.fit(X_train, y_train)
-    y_pred_knn = knn.predict(X_test)
-    acc_knn = accuracy_score(y_test, y_pred_knn)
-    st.write(f'k-NN Accuracy: {acc_knn}')
+    
+    try:
+        knn.fit(X_train, y_train)
+        y_pred_knn = knn.predict(X_test)
+        acc_knn = accuracy_score(y_test, y_pred_knn)
+        st.write(f'k-NN Accuracy: {acc_knn}')
+    except ValueError as e:
+        st.error(f"Error during k-NN classification: {e}")
     
     # Προσθήκη άλλων αλγορίθμων κατηγοριοποίησης εδώ
 
@@ -85,10 +89,14 @@ def clustering_tab(data):
     
     k = st.slider('Select k for k-Means', 1, 20, 5)
     kmeans = KMeans(n_clusters=k, random_state=42)
-    kmeans.fit(features)
-    clusters = kmeans.predict(features)
-    silhouette_avg = silhouette_score(features, clusters)
-    st.write(f'k-Means Silhouette Score: {silhouette_avg}')
+    
+    try:
+        kmeans.fit(features)
+        clusters = kmeans.predict(features)
+        silhouette_avg = silhouette_score(features, clusters)
+        st.write(f'k-Means Silhouette Score: {silhouette_avg}')
+    except ValueError as e:
+        st.error(f"Error during k-Means clustering: {e}")
     
     # Προσθήκη άλλων αλγορίθμων ομαδοποίησης εδώ
 
@@ -114,7 +122,7 @@ def main():
         method = st.selectbox("Choose a dimensionality reduction method", ['PCA', 't-SNE'])
         visualize_2d(data, method)
 
-        # Tabs για αλγορίθμους Μηχανικής Μάθησης
+        # Tabs για αλγόριθμους Μηχανικής Μάθησης
         st.header("Machine Learning")
         tab1, tab2 = st.tabs(["Classification", "Clustering"])
         
