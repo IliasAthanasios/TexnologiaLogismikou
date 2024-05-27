@@ -35,14 +35,14 @@ if uploaded_file is not None:
     visualization_option = st.selectbox("Select a visualization method", ["PCA", "t-SNE"])
 
     def pca_visualization(data):
-    pca = PCA(n_components=2)
-    principal_components = pca.fit_transform(data.iloc[:, :-1])
+        pca = PCA(n_components=2)
+        principal_components = pca.fit_transform(data.iloc[:, :-1])
     
     # Αντιστοίχιση κατηγοριών σε αριθμητικές τιμές για το χρωματισμό
-    labels = data.iloc[:, -1]
-    unique_labels = labels.unique()
-    label_mapping = {label: idx for idx, label in enumerate(unique_labels)}
-    numeric_labels = labels.map(label_mapping)
+        labels = data.iloc[:, -1]
+        unique_labels = labels.unique()
+        label_mapping = {label: idx for idx, label in enumerate(unique_labels)}
+        numeric_labels = labels.map(label_mapping)
 
     plt.figure(figsize=(10, 6))
     scatter = plt.scatter(principal_components[:, 0], principal_components[:, 1], c=numeric_labels, cmap='viridis')
