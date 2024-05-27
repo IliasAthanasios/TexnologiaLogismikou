@@ -34,7 +34,7 @@ if uploaded_file is not None:
     st.header("2D Visualization")
     visualization_option = st.selectbox("Select a visualization method", ["PCA", "t-SNE"])
 
- def pca_visualization(data):
+    def pca_visualization(data):
     pca = PCA(n_components=2)
     principal_components = pca.fit_transform(data.iloc[:, :-1])
     
