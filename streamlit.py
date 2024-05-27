@@ -67,18 +67,6 @@ st.write(data.iloc[:, -1].unique())
 
 pca_visualization(data)
 
-    def tsne_visualization(data):
-        tsne = TSNE(n_components=2)
-        tsne_results = tsne.fit_transform(data.iloc[:, :-1])
-        plt.scatter(tsne_results[:, 0], tsne_results[:, 1], c=data.iloc[:, -1])
-        plt.title('t-SNE Visualization')
-        st.pyplot(plt)
-
-    if visualization_option == "PCA":
-        pca_visualization(data)
-    elif visualization_option == "t-SNE":
-        tsne_visualization(data)
-
     # Classification Tab
     st.header("Classification")
     classification_option = st.selectbox("Select a classification algorithm", ["k-NN", "SVM"])
