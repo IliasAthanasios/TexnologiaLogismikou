@@ -31,5 +31,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.IliasAthanasios }}/texnologialogismikou:latest
+          tags: ghcr.io/${{ github.IliasAthanasios }}texnologialogismikou:latest
 
